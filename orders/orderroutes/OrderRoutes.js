@@ -31,9 +31,10 @@ OrderRoutes.post("/add", async (req, res) => {
 
     res.status(200).json({ status: 200, message: "Order placed", newOrder });
   } catch (error) {
-    console.error("❌ Order creation failed:", error.message);
-    res.status(400).json({ status: 400, message: "Order failed", error });
-  }
+  console.error("❌ Order creation failed:", error);
+  res.status(500).json({ status: 500, message: "Order failed", error: error.message });
+}
+
 });
 
 // READ all orders (admin)
