@@ -15,7 +15,7 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-ListingRoutes.get("/", async (req, res) => {
+ListingRoutes.get("/all", async (req, res) => {
   try {
     const GetAllListings = await Listing.find();
     res
@@ -37,6 +37,7 @@ ListingRoutes.post("/add", uploads.array("images", 2),
     PerfumeDescription,
     PerfumePrice,
     PerfumeBottleML,
+    PerfumeDetail
   } = req.body;
 
   const PerfumePictureIds = req.file?.filename
@@ -54,6 +55,7 @@ ListingRoutes.post("/add", uploads.array("images", 2),
       PerfumeDescription,
       PerfumePrice,
       PerfumeBottleML,
+      PerfumeDetail,
       PerfumePicture : uploadedImages,
       PerfumePictureIds : uploadedImageIds,
     };
@@ -111,6 +113,7 @@ ListingRoutes.put("/edit/:id", uploads.array("images", 2), async (req, res) => {
     PerfumeDescription,
     PerfumePrice,
     PerfumeBottleML,
+    PerfumeDetail
   } = req.body;
 
   const uploadedImages = req.files?.map((file) => file.path); // new image URLs
@@ -135,6 +138,7 @@ ListingRoutes.put("/edit/:id", uploads.array("images", 2), async (req, res) => {
         PerfumeDescription: PerfumeDescription || existingData.PerfumeDescription,
         PerfumePrice: PerfumePrice || existingData.PerfumePrice,
         PerfumeBottleML: PerfumeBottleML || existingData.PerfumeBottleML,
+        PerfumeDetail: PerfumeDetail || existingData.PerfumeDetail,
         PerfumePicture: uploadedImages || existingData.PerfumePicture,
         PerfumePictureIds: uploadedImageIds || existingData.PerfumePictureIds,
       },

@@ -19,7 +19,7 @@ cloudinary.config({
 });
 
 
-ReviewRoutes.get("/",async(req,res)=>{
+ReviewRoutes.get("/all",async(req,res)=>{
     try{
         const GetAllReview = await Review.find();
         res.status(200).send({status:200,message:enums.SUCCESS,data:GetAllReview})
@@ -32,21 +32,24 @@ ReviewRoutes.get("/",async(req,res)=>{
 
 
 ReviewRoutes.post("/add",uploads.single("ReviewImage"),async(req,res)=>{
-    const{ReviewName,ReviewTitle,ReviewExperience,ReviewEmail,ReviewGender,ReviewAge}=req.body
+    const { ReviewName, ReviewTitle, ReviewExperience, ReviewEmail, ReviewGender, ReviewAge, ReviewRating, ReviewProductID } = req.body;
     const ReviewImage= req.file?.path
     const ReviewImageID= req.file?.filename
 
     try{
-        const newReview = {
-            ReviewName,
-            ReviewTitle,
-            ReviewExperience,
-            ReviewEmail,
-            ReviewGender,
-            ReviewAge,
-            ReviewImage,
-            ReviewImageID
-        }
+      const newReview = {
+  ReviewName,
+  ReviewTitle,
+  ReviewExperience,
+  ReviewEmail,
+  ReviewGender,
+  ReviewAge,
+  ReviewImage,
+  ReviewImageID,
+  ReviewRating: Number(ReviewRating),
+  ReviewProductID, // ✅ this is what links the review to a product
+};
+
         await Review.create(newReview)
         res.status(200).send({status:200,message:enums.ADD,newReview})
     }
@@ -92,7 +95,8 @@ ReviewRoutes.put("/edit/:id", uploads.single("ReviewImage"), async (req, res) =>
     ReviewExperience,
     ReviewEmail,
     ReviewGender,
-    ReviewAge
+    ReviewAge,
+    ReviewRating 
   } = req.body;
 
   const NewReviewImage = req.file?.path;

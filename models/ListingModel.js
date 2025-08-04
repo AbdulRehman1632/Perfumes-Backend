@@ -7,6 +7,7 @@ const ListingSchema = new mongoose.Schema({
     PerfumeDescription:{type:String},
     PerfumePrice:{type:String},
     PerfumeBottleML:{type:String},
+    PerfumeDetail:{type:String},
     PerfumePicture: {
     type: [String], // ✅ Array of Cloudinary image URLs
     default: []

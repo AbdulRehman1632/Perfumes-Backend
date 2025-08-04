@@ -5,6 +5,9 @@ import mongoose from "mongoose"
 import ListingRoutes from "./routes/ListingRoutes/ListingRoutes.js"
 import ReviewRoutes from "./reviews/reviewroutes/ReviewRoutes.js"
 import OrderRoutes from "./orders/orderroutes/OrderRoutes.js"
+import AdminRoutes from "./admin/adminroutes/AdminRoutes.js"
+import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
+// import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
 
 const app = express()
 
@@ -35,6 +38,8 @@ DB_CONNECTION()
 app.use("/Listing", ListingRoutes)
 app.use("/Reviews", ReviewRoutes)
 app.use("/Orders", OrderRoutes)
+app.use("/Offer", OfferRoutes)
+app.use("/api/admin", AdminRoutes);
 
 app.listen(PORT,()=>{
     console.log(`server start ${PORT}`)

@@ -15,7 +15,19 @@ const ReviewSchema = new mongoose.Schema({
 ReviewAge:{
     type:String,
     enum:["Below 18" , "18-34" ,"35-54" ,"55+"]
-}
+},
+  ReviewRating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  },
+  ReviewProductID: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Product", // or your product model name
+  required: true,
+},
+
 })
 
 

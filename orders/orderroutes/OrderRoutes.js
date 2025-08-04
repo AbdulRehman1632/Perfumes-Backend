@@ -10,7 +10,14 @@ OrderRoutes.post("/add", async (req, res) => {
   console.log("🛒 Received order body:", req.body);
 
   // ⬇️ Directly destructuring values as per schema
-  const { name, email, phone, products, totalAmount, shippingAddress } = req.body;
+  const { name, email, phone,products, totalAmount, shippingAddress } = req.body;
+
+   console.log("➡️ Extracted Products:", products);
+
+  if (!products || !Array.isArray(products)) {
+    return res.status(400).json({ status: 400, message: "Invalid or missing products" });
+  }
+
 
   try {
     const newOrder = await Order.create({
@@ -30,7 +37,7 @@ OrderRoutes.post("/add", async (req, res) => {
 });
 
 // READ all orders (admin)
-OrderRoutes.get("/", async (req, res) => {
+OrderRoutes.get("/all", async (req, res) => {
   try {
     const orders = await Order.find()
       .populate("products.productId");
@@ -51,6 +58,23 @@ OrderRoutes.get("/:id", async (req, res) => {
   }
 });
 
+
+// GET /api/orders?email=abc@gmail.com
+
+OrderRoutes.post("/get-order-by-email", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const orders = await Order.find({ email });
+    res.json(orders);
+  } catch (err) {
+    console.error("❌ Error in fetching orders:", err);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+
+
 // UPDATE order status (admin)
 OrderRoutes.put("/edit/:id", async (req, res) => {
   try {
@@ -65,6 +89,14 @@ OrderRoutes.put("/edit/:id", async (req, res) => {
   }
 });
 
+
+OrderRoutes.put("/status/:id", async (req, res) => {
+  const { status } = req.body;
+  const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
+  res.json(order);
+});
+
+
 // DELETE order (admin)
 OrderRoutes.delete("/delete/:id", async (req, res) => {
   try {
@@ -74,5 +106,6 @@ OrderRoutes.delete("/delete/:id", async (req, res) => {
     res.status(400).json({ status: 400, message: "Delete failed" });
   }
 });
+
 
 export default OrderRoutes;
