@@ -13,7 +13,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors({
-  origin: ['https://perfumes-frontend.vercel.app'],
+  origin: ['https://perfumes-frontend-one.vercel.ap'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true}))
 
