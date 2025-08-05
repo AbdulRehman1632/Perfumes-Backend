@@ -12,15 +12,19 @@ import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
 const app = express()
 
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+  origin: ['https://perfumes-frontend.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true}))
+
 dotenv.config();
 
 const PORT=process.env.PORT || 16000
 const MONOGO_URI = process.env.URL_MONGODB
 
-app.get("/",(req,res)=>{
-    res.send("welcome to perfumes backend ")
-})
+// app.get("/",(req,res)=>{
+//     res.send("welcome to perfumes backend ")
+// })
 
 
 const DB_CONNECTION = async() => {
