@@ -10,10 +10,6 @@ dotenv.config();
 const AdminRoutes = express.Router();
 
 AdminRoutes.post("/login", async (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "https://perfumes-frontend-one.vercel.app");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
   const { email, password } = req.body;
 
   try {
