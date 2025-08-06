@@ -11,7 +11,10 @@ import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
 
 const app = express()
 
-app.use(express.json())
+// app.use(express.json())
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+
 app.use(cors({
   origin: 'https://perfumes-frontend-one.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ OPTIONS added
