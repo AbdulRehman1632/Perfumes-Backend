@@ -25,9 +25,9 @@ dotenv.config();
 const PORT=process.env.PORT || 16000
 const MONOGO_URI = process.env.URL_MONGODB
 
-// app.get("/",(req,res)=>{
-//     res.send("welcome to perfumes backend ")
-// })
+app.get("/",(req,res)=>{
+    res.send("welcome to perfumes backend ")
+})
 
 
 const DB_CONNECTION = async() => {
