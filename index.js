@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(cors({
   origin: 'https://perfumes-frontend-one.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ OPTIONS added
-  allowedHeaders: ['Content-Type', 'Authorization'], // ✅ optional, but good practice
+  allowedHeaders: ['Content-Type'], // ✅ optional, but good practice
   credentials: true
 }));
 
