@@ -32,24 +32,28 @@ app.get("/",(req,res)=>{
 })
 
 
-const DB_CONNECTION = async() => {
-    try{
-        await mongoose.connect(MONOGO_URI)
-        console.log("Db connected")
-    }
-    catch(error){
-        console.log("Db not connected")
-    }
-}
-
-DB_CONNECTION()
-
 app.use("/Listing", ListingRoutes)
 app.use("/Reviews", ReviewRoutes)
 app.use("/Orders", OrderRoutes)
 app.use("/Offer", OfferRoutes)
 app.use("/api/admin", AdminRoutes);
 
-app.listen(PORT,()=>{
-    console.log(`server start ${PORT}`)
-})
+
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) return;
+  await mongoose.connect(process.env.URL_MONGODB);
+  isConnected = true;
+};
+
+export default async function handler(req, res) {
+  await connectDB();
+  return app(req, res);
+}
+
+
+
+// app.listen(PORT,()=>{
+//     console.log(`server start ${PORT}`)
+// })
