@@ -11,12 +11,9 @@ import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
 
 const app = express()
 
-// app.use(express.json())
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
-
+app.use(express.json())
 app.use(cors({
-  origin: 'https://perfumes-frontend-one.vercel.app',
+  origin: ["https://perfumes-frontend-one.vercel.app", "http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ OPTIONS added
   allowedHeaders: ['Content-Type'], // ✅ optional, but good practice
   credentials: true
@@ -35,28 +32,39 @@ app.get("/",(req,res)=>{
 })
 
 
+const DB_CONNECTION = async() => {
+    try{
+        await mongoose.connect(MONOGO_URI)
+        console.log("Db connected")
+    }
+    catch(error){
+        console.log("Db not connected")
+    }
+}
+
+DB_CONNECTION()
+
 app.use("/Listing", ListingRoutes)
 app.use("/Reviews", ReviewRoutes)
 app.use("/Orders", OrderRoutes)
 app.use("/Offer", OfferRoutes)
 app.use("/api/admin", AdminRoutes);
 
-
-let isConnected = false;
-
-const connectDB = async () => {
-  if (isConnected) return;
-  await mongoose.connect(process.env.URL_MONGODB);
-  isConnected = true;
-};
-
-export default async function handler(req, res) {
-  await connectDB();
-  return app(req, res);
-}
+app.listen(PORT,()=>{
+    console.log(`server start ${PORT}`)
+})
 
 
 
-// app.listen(PORT,()=>{
-//     console.log(`server start ${PORT}`)
-// })
+// let isConnected = false;
+
+// const connectDB = async () => {
+//   if (isConnected) return;
+//   await mongoose.connect(process.env.URL_MONGODB);
+//   isConnected = true;
+// };
+
+// export default async function handler(req, res) {
+//   await connectDB();
+//   return app(req, res);
+// }
