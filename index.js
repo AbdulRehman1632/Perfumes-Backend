@@ -10,14 +10,14 @@ import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
 // import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js"
 
 const app = express()
-
-app.use(express.json())
 app.use(cors({
   origin: ["https://perfumes-frontend-one.vercel.app", "http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // ✅ OPTIONS added
   allowedHeaders: ['Content-Type'], // ✅ optional, but good practice
   credentials: true
 }));
+
+app.use(express.json())
 
 
 
