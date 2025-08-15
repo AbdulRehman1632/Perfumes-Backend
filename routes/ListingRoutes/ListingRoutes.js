@@ -29,8 +29,7 @@ ListingRoutes.get("/all", async (req, res) => {
 
 
 
-ListingRoutes.post("/add", uploads.array("images", 2),
-   async (req, res) => {
+ListingRoutes.post("/add", uploads.array("images", 2), async (req, res) => {
   const {
     PerfumeTitle,
     PerfumeCategory,
@@ -40,15 +39,14 @@ ListingRoutes.post("/add", uploads.array("images", 2),
     PerfumeDetail
   } = req.body;
 
-  const PerfumePictureIds = req.file?.filename
-  console.log = (PerfumePictureIds)
-
-       
-
-
   try {
-    const uploadedImageIds = req.files.map(file => file.filename); // ✅ Cloudinary public_id
-     const uploadedImages = req.files.map((file) => file.path); // Cloudinary URL
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: "Images are required" });
+    }
+
+    const uploadedImageIds = req.files.map(file => file.filename);
+    const uploadedImages = req.files.map(file => file.path);
+
     const newlisting = {
       PerfumeTitle,
       PerfumeCategory,
@@ -56,22 +54,25 @@ ListingRoutes.post("/add", uploads.array("images", 2),
       PerfumePrice,
       PerfumeBottleML,
       PerfumeDetail,
-      PerfumePicture : uploadedImages,
-      PerfumePictureIds : uploadedImageIds,
+      PerfumePicture: uploadedImages,
+      PerfumePictureIds: uploadedImageIds,
     };
     
     await Listing.create(newlisting);
 
-    res.status(200).send({status:200,message:enums.ADD,newlisting})
-
+    res.status(200).json({
+      status: 200,
+      message: enums.ADD,
+      newlisting
+    });
 
   } catch (error) {
-    console.error("❌ Error in POST /add:", error.message); // 👈 Console pe print hoga
-  res.status(400).send({
-    status: 400,
-    message: enums.ERRORS,
-    error: error.message // 👈 Client ko actual error milega
-  });
+    console.error("❌ Error in POST /add:", error);
+    res.status(400).json({
+      status: 400,
+      message: enums.ERRORS,
+      error: error.message
+    });
   }
 });
 
