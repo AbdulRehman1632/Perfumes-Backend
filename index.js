@@ -19,7 +19,7 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
 
 app.use(cors({
   origin: allowedOrigins,
-  origin: ["https://perfumes-frontend-one.vercel.app", "http://localhost:5173"],
+  // origin: ["https://perfumes-frontend-one.vercel.app", "http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
