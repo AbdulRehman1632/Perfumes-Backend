@@ -8,13 +8,17 @@ import OrderRoutes from "./orders/orderroutes/OrderRoutes.js";
 import AdminRoutes from "./admin/adminroutes/AdminRoutes.js";
 import OfferRoutes from "./offers/offerRoutes/OfferRoutes.js";
 import ContactRoutes from "./contact/contactRoutes/ContactRoutes.js";
-// import ContactRoutes from "./contact/contactRoutes/ContactRoutes.js"
+
 
 dotenv.config();
 const app = express();
 
-// ✅ CORS fix
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? ["https://perfumes-frontend-one.vercel.app"]
+  : ["http://localhost:5173", "https://perfumes-frontend-one.vercel.app"];
+
 app.use(cors({
+  origin: allowedOrigins,
   origin: ["https://perfumes-frontend-one.vercel.app", "http://localhost:5173"],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -51,9 +55,9 @@ app.use("/Offer", OfferRoutes);
 app.use("/api/admin", AdminRoutes);
 app.use("/contact", ContactRoutes);
 
-// app.listen(PORT, () => {
-//   console.log(`Server started on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
 
 
 export default app;
