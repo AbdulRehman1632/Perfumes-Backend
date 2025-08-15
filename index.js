@@ -54,3 +54,6 @@ app.use("/contact", ContactRoutes);
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
+
+
+export default app;
