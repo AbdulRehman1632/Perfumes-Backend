@@ -51,9 +51,9 @@ app.use("/Offer", OfferRoutes);
 app.use("/api/admin", AdminRoutes);
 app.use("/contact", ContactRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server started on port ${PORT}`);
+// });
 
 
 export default app;
